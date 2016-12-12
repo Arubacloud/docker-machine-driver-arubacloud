@@ -6,6 +6,7 @@ import (
 	"github.com/docker/machine/libmachine/log"
 	"github.com/docker/machine/libmachine/mcnutils"
 	"github.com/arubacloud/goarubacloud"
+        "github.com/arubacloud/goarubacloud/models"
 	"time"
 	"fmt"
 	"net"
