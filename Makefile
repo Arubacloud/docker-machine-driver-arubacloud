@@ -1,6 +1,6 @@
 .PHONY: build test release clean
 
-GITHUB_USER := blackms
+GITHUB_USER := arubacloud
 VERSION := $(shell grep -w Version version.go | awk '{print $$5}' | sed 's/"//g')
 
 TARGET_OS ?= darwin linux windows
