@@ -6,7 +6,7 @@ import (
 	"github.com/docker/machine/libmachine/log"
 	"github.com/docker/machine/libmachine/mcnutils"
 	"github.com/arubacloud/goarubacloud"
-        "github.com/arubacloud/goarubacloud/models"
+    "github.com/arubacloud/goarubacloud/models"
 	"time"
 	"fmt"
 	"net"
@@ -24,6 +24,8 @@ type Driver struct {
 	*drivers.BaseDriver
 
 	TemplateID    int
+	TemplateName string
+	Size string
 	PackageID     int
 	AdminPassword string
 	Username      string
@@ -55,12 +57,12 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Usage: "ArubaCloud Password",
 			Value: "",
 		},
-		mcnflag.IntFlag{
+		/*mcnflag.IntFlag{
 			EnvVar: "AC_TEMPLATE_ID",
 			Name: "ac_template_id",
 			Usage: "VM Template ID",
 			Value: 0,
-		},
+		},*/
 		mcnflag.IntFlag{
 			EnvVar: "AC_PACKAGE_ID",
 			Name: "ac_package_id",
@@ -84,20 +86,33 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Usage: "SSH Keyname to use.",
 			Value: "",
 		},
+		mcnflag.StringFlag{
+			EnvVar: "AC_TEMPLATE",
+			Name: "ac_template",
+			Usage: "VM Template",
+			Value: "",
+		},
+		mcnflag.StringFlag{
+			EnvVar: "AC_SIZE",
+			Name: "ac_size",
+			Usage: "Machine Size",
+			Value: "",
+		},
 	}
 }
 
 // DriverName returns the name of the driver
 func (d *Driver) DriverName() string {
-	return "ArubaCloud"
+	return "arubacloud"
 }
 
 func (d *Driver) PreCreateCheck() error {
 	client := d.getClient()
 
-	log.Debug("Validating Template")
-	_, err := client.GetTemplate(d.TemplateID)
+	log.Debug("Validating Template ", d.TemplateName)
+	_, err := client.GetTemplate(d.TemplateName)
 	if err != nil {
+		fmt.Println("GetTemplate: ", err)
 		return err
 	}
 
@@ -130,7 +145,9 @@ func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
 	d.Password = flags.String("ac_password")
 	d.AdminPassword = flags.String("ac_admin_password")
 	d.PackageID = flags.Int("ac_package_id")
-	d.TemplateID = flags.Int("ac_template_id")
+	//d.TemplateID = flags.Int("ac_template_id")
+	d.TemplateName = flags.String("ac_template")
+	d.Size = flags.String("ac_size")
 	d.Endpoint = flags.String("ac_endpoint")
 	d.KeyPairName = flags.String("ac_ssh_key")
 
@@ -171,14 +188,30 @@ func (d *Driver) Create() error {
 		return err
 	}
 
+	log.Debug("Get Template ", d.TemplateName)
+	template, err := client.GetTemplate(d.TemplateName)
+	if err != nil {
+		return err
+	} else {
+		log.Debug("Template found with Id: ", template.Id)
+	}
+	
+	log.Debug("Get Package ", d.TemplateName)
+	cloudpackage, err := client.GetPreconfiguredPackage(d.Size)
+	if err != nil {
+		return err
+	} else {
+		log.Debug("Package found with Id: ", cloudpackage.PackageID)
+	}
+	
 	// Create instance
-	log.Debug("Creating ArubaCloud server...")
-
+	log.Debug("Creating ArubaCloud server... with packageID: ", d.PackageID)
+	
 	instance, err := client.CreateServer(
 		d.MachineName,
 		d.AdminPassword,
 		d.PackageID,
-		d.TemplateID,
+		template.Id,
 	)
 
 	if err != nil {
