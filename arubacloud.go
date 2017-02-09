@@ -9,6 +9,7 @@ import (
     "github.com/arubacloud/goarubacloud/models"
 	"time"
 	"fmt"
+	"io/ioutil"
 	"net"
 	"github.com/docker/machine/libmachine/state"
 	"github.com/docker/machine/libmachine/ssh"
@@ -183,7 +184,7 @@ func (d *Driver) waitForServerStatus(status int) (server *models.Server, err err
 func (d *Driver) Create() error {
 	client := d.getClient()
 
-	err := d.createKeyPair()
+	key, err := d.createKeyPair()
 	if err != nil {
 		return err
 	}
@@ -212,6 +213,7 @@ func (d *Driver) Create() error {
 		d.AdminPassword,
 		d.PackageID,
 		template.Id,
+		key,
 	)
 
 	if err != nil {
@@ -277,24 +279,30 @@ func (d *Driver) publicSSHKeyPath() string {
 	return d.GetSSHKeyPath() + ".pub"
 }
 
-func (d *Driver) createKeyPair() error {
+func (d *Driver) createKeyPair() (string, error) {
 	log.Debug("Creating Key Pair...", map[string]interface{}{"Name": d.KeyPairName})
 	keyfile := d.GetSSHKeyPath()
 	keypath := filepath.Dir(keyfile)
 	err := os.MkdirAll(keypath, 0700)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	err = ssh.GenerateSSHKey(d.GetSSHKeyPath())
 	if err != nil {
-		return err
+		return "", err
+	}
+	
+	publicKey, err := ioutil.ReadFile(d.publicSSHKeyPath())
+	if err != nil {
+		return "", err
 	}
 
-	return nil
+	return string(publicKey), nil
 }
 
 func (d *Driver) GetSSHHostname() (string, error) {
+	log.Debugf("GetSSHHostname: ", d.IPAddress)
 	return d.IPAddress, nil
 }
 
