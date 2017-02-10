@@ -115,7 +115,7 @@ Available parameters for `--ac_endpoint` are shown in the next table.
 | `dc1`     | Italy 1                                              |
 | `dc2`     | Italy 2                                              |
 | `dc3`     | Czech republic 									   |
-| `dc4`     | Francia                                              |
+| `dc4`     | France                                               |
 | `dc5`     | Deutschland                             			   |
 | `dc6`     | United Kingdom                            		|
 

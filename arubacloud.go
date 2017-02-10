@@ -58,18 +58,6 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Usage: "ArubaCloud Password",
 			Value: "",
 		},
-		/*mcnflag.IntFlag{
-			EnvVar: "AC_TEMPLATE_ID",
-			Name: "ac_template_id",
-			Usage: "VM Template ID",
-			Value: 0,
-		},*/
-		/*mcnflag.IntFlag{
-			EnvVar: "AC_PACKAGE_ID",
-			Name: "ac_package_id",
-			Usage: "VM Package ID",
-			Value: 1,
-		},*/
 		mcnflag.StringFlag{
 			EnvVar: "AC_ADMIN_PASSWORD",
 			Name: "ac_admin_password",
