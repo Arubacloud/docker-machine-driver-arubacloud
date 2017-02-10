@@ -64,12 +64,12 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Usage: "VM Template ID",
 			Value: 0,
 		},*/
-		mcnflag.IntFlag{
+		/*mcnflag.IntFlag{
 			EnvVar: "AC_PACKAGE_ID",
 			Name: "ac_package_id",
 			Usage: "VM Package ID",
 			Value: 1,
-		},
+		},*/
 		mcnflag.StringFlag{
 			EnvVar: "AC_ADMIN_PASSWORD",
 			Name: "ac_admin_password",
@@ -82,11 +82,11 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Usage: "Endpoint name (dc1,dc2,dc3 etc.)",
 			Value: "",
 		},
-		mcnflag.StringFlag{
+		/*mcnflag.StringFlag{
 			Name:  "ac_ssh_key",
 			Usage: "SSH Keyname to use.",
 			Value: "",
-		},
+		},*/
 		mcnflag.StringFlag{
 			EnvVar: "AC_TEMPLATE",
 			Name: "ac_template",
@@ -337,7 +337,6 @@ func (d *Driver) GetState() (state.State, error) {
 
 func (d *Driver) Remove() error {
 	log.Debugf("deleting server...", map[string]interface{}{"MachineID": d.ServerId})
-	log.Info("Deleting ArubaCloud server...")
 
 	client := d.getClient()
 
@@ -361,7 +360,6 @@ func (d *Driver) Remove() error {
 
 func (d *Driver) Start() error {
 	log.Debugf("starting server...", map[string]interface{}{"MachineID": d.ServerId})
-	log.Info("Starting ArubaCloud server...")
 
 	client := d.getClient()
 
@@ -375,7 +373,6 @@ func (d *Driver) Start() error {
 
 func (d *Driver) Stop() (err error) {
 	log.Debugf("Stopping server...", map[string]interface{}{"MachineID": d.ServerId})
-	log.Info("Stopping Server...")
 
 	client := d.getClient()
 
@@ -404,7 +401,6 @@ func (d *Driver) GetURL() (string, error) {
 
 func (d *Driver) Restart() error {
 	log.Debugf("restarting server...", map[string]interface{}{"MachineID": d.ServerId})
-	log.Info("Restarting ArubaCloud Server...")
 
 	client := d.getClient()
 
@@ -426,7 +422,6 @@ func (d *Driver) Restart() error {
 
 func (d *Driver) Kill() (err error) {
 	log.Debugf("Killing server...", map[string]interface{}{"MachineID": d.ServerId})
-	log.Info("Killing Server...")
 
 	client := d.getClient()
 
