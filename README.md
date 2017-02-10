@@ -13,7 +13,7 @@
 
 ## Overview
 
-The Aruba Cloud Driver is a plugin for Docker Machine which allows you to automate the provisioning of Docker hosts on Aruba Cloud Servers. The plugin is based on the [Go Aruba Cloud SDK](https://github.com/Arubacloud/goarubacloud) and [Cloud API](http://kb.cloud.it/api.aspx). 
+The Aruba Cloud Driver is a plugin for Docker Machine which allows you to automate the provisioning of Docker hosts on Aruba Cloud Servers. The plugin is based on the [Go Aruba Cloud SDK](https://github.com/Arubacloud/goarubacloud) and [Cloud API](http://kb.cloud.it/en/api.aspx). 
 
 To acquire Aruba Cloud Cloud API credentials visit https://www.cloud.it.
 
