@@ -131,9 +131,9 @@ Supported values for `--ac_template` are listed below.
 | `WS12-002_W2K12R2_1_0`                | `Windows 2012 R2 64bit`					|
 
  
-### Example
+### Examples
 
-#### Create using defaults
+#### Create using defaults:
 
 ```
 docker-machine --debug create --driver arubacloud \
@@ -142,7 +142,7 @@ docker-machine --debug create --driver arubacloud \
 MyDockerHostName
 ```
 
-#### Create specifying template, endpoint and size
+#### Create specifying template, endpoint and size:
 
 ```
 docker-machine --debug create --driver arubacloud \
@@ -154,16 +154,19 @@ docker-machine --debug create --driver arubacloud \
  --ac_admin_password		      "yyyyyyyy" \  
 MyDockerHostName
 ```
-####View new instace
+####View new instance
 
 Go to Aruba Cloud dashboard to view new instance. 
-Dashboard url is different depending on selected endpoint:
-[DC1](https://admin.dc1.computing.cloud.it/Login.aspx)
-[DC2](https://admin.dc2.computing.cloud.it/Login.aspx)
-[DC3](https://admin.dc3.computing.cloud.it/Login.aspx)
-[DC4](https://admin.dc4.computing.cloud.it/Login.aspx)
-[DC5](https://admin.dc5.computing.cloud.it/Login.aspx)
-[DC6](https://admin.dc6.computing.cloud.it/Login.aspx)
+Dashboard url is different depending on the selected endpoint:
+
+|              Dashboard                					|
+|-----------------------------------------------------------|
+|[DC1](https://admin.dc1.computing.cloud.it/Login.aspx)		|
+|[DC2](https://admin.dc2.computing.cloud.it/Login.aspx)		|
+|[DC3](https://admin.dc3.computing.cloud.it/Login.aspx)		|
+|[DC4](https://admin.dc4.computing.cloud.it/Login.aspx)		|
+|[DC5](https://admin.dc5.computing.cloud.it/Login.aspx)		|
+|[DC6](https://admin.dc6.computing.cloud.it/Login.aspx)		|
 
 
 ## License
