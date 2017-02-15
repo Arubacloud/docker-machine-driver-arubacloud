@@ -133,6 +133,17 @@ Supported values for `--ac_template` are listed below.
  
 ### Example
 
+#### Create using defaults
+
+```
+docker-machine --debug create --driver arubacloud \
+ --ac_username		              "ARU-XXXX" \
+ --ac_password			          "xxxxxxx" \
+MyDockerHostName
+```
+
+#### Create specifying template, endpoint and size
+
 ```
 docker-machine --debug create --driver arubacloud \
  --ac_username		              "ARU-XXXX" \
@@ -143,6 +154,17 @@ docker-machine --debug create --driver arubacloud \
  --ac_admin_password		      "yyyyyyyy" \  
 MyDockerHostName
 ```
+####View new instace
+
+Go to Aruba Cloud dashboard to view new instance. 
+Dashboard url is different depending on selected endpoint:
+[DC1](https://admin.dc1.computing.cloud.it/Login.aspx)
+[DC2](https://admin.dc2.computing.cloud.it/Login.aspx)
+[DC3](https://admin.dc3.computing.cloud.it/Login.aspx)
+[DC4](https://admin.dc4.computing.cloud.it/Login.aspx)
+[DC5](https://admin.dc5.computing.cloud.it/Login.aspx)
+[DC6](https://admin.dc6.computing.cloud.it/Login.aspx)
+
 
 ## License
 
