@@ -156,7 +156,7 @@ MyDockerHostName
 ```
 ####View new instance
 
-Go to Aruba Cloud dashboard to view new instance. 
+Go to Aruba Cloud dashboard to view new instance.
 Dashboard url is different depending on the selected endpoint:
 
 |              Dashboard                					|
@@ -174,7 +174,7 @@ Dashboard url is different depending on the selected endpoint:
 docker-machine ls
 NAME    			ACTIVE   	DRIVER       STATE   	URL   				SWARM   	DOCKER    ERRORS
 MyDockerHostName   	*        	arubacloud   Running    tcp://10.254.4.232             	v1.10.0   
-default   			-       	arubacloud   Running    tcp://10.254.4.232             	v1.10.0   
+default   			-       	arubacloud   Running    tcp://10.254.4.231             	v1.10.0   
 
 ```
 
