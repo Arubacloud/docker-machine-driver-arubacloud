@@ -22,7 +22,7 @@ const (
 )
 
 type Driver struct {
-	*drivers.BaseDriver
+	drivers.BaseDriver
 
 	TemplateID    int
 	TemplateName string
@@ -41,6 +41,12 @@ type Driver struct {
 	// internal
 	client        *goarubacloud.API
 }
+
+const(
+	defaultTemplate = "ubuntu1604_x64_1_0"
+	defaultEndpoint = "dc1"
+	defaultSize = "Large"
+)
 
 // GetCreateFlags registers the "machine create" flags recognized by this driver, including
 // their help text and defaults.
@@ -68,24 +74,19 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			EnvVar: "AC_ENDPOINT",
 			Name: "ac_endpoint",
 			Usage: "Endpoint name (dc1,dc2,dc3 etc.)",
-			Value: "",
+			Value: defaultEndpoint,
 		},
-		/*mcnflag.StringFlag{
-			Name:  "ac_ssh_key",
-			Usage: "SSH Keyname to use.",
-			Value: "",
-		},*/
 		mcnflag.StringFlag{
 			EnvVar: "AC_TEMPLATE",
 			Name: "ac_template",
 			Usage: "VM Template",
-			Value: "",
+			Value: defaultTemplate,
 		},
 		mcnflag.StringFlag{
 			EnvVar: "AC_SIZE",
 			Name: "ac_size",
 			Usage: "Machine Size",
-			Value: "",
+			Value: defaultSize,
 		},
 	}
 }
@@ -134,12 +135,11 @@ func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
 	d.Password = flags.String("ac_password")
 	d.AdminPassword = flags.String("ac_admin_password")
 	d.PackageID = flags.Int("ac_package_id")
-	//d.TemplateID = flags.Int("ac_template_id")
 	d.TemplateName = flags.String("ac_template")
 	d.Size = flags.String("ac_size")
 	d.Endpoint = flags.String("ac_endpoint")
 	d.KeyPairName = flags.String("ac_ssh_key")
-
+	
 	d.SSHUser = "root"
 
 	return nil
@@ -170,6 +170,7 @@ func (d *Driver) waitForServerStatus(status int) (server *models.Server, err err
 
 // Create a new docker machine instance on ArubaCloud Cloud
 func (d *Driver) Create() error {
+	log.Debug("Create ", d.TemplateName)
 	client := d.getClient()
 
 	key, err := d.createKeyPair()
@@ -194,12 +195,12 @@ func (d *Driver) Create() error {
 	}
 	
 	// Create instance
-	log.Debug("Creating ArubaCloud server... with packageID: ", d.PackageID)
+	log.Debug("Creating ArubaCloud server... with packageID: ", cloudpackage.PackageID)
 	
 	instance, err := client.CreateServer(
 		d.MachineName,
 		d.AdminPassword,
-		d.PackageID,
+		cloudpackage.PackageID,
 		template.Id,
 		key,
 	)

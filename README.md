@@ -97,14 +97,14 @@ docker-machine create -d arubacloud --help
   * `--ac_size`: Size of the virtual machine.
 
 
-|          CLI Option              | Environment Variable           | Required |
-| -------------------------------- | ------------------------------ | -------- |
-| `--ac_username`	               | `AC_USERNAME`            		| yes      |
-| `--ac_password`       	       | `AC_PASSWORD`         		 	| yes      |
-| `--ac_admin_password`        	   | `AC_ADMIN_PASSWORD`            | yes      |
-| `--ac_endpoint`                  | `AC_ENDPOINT`               	| yes      |
-| `--ac_template`         		   | `AC_TEMPLATE`         		 	| yes      |
-| `--ac_size`    		   		   | `AC_SIZE`       				| yes      |
+|          CLI Option             |Default Value 	| Environment Variable           | Required |
+| --------------------------------|--------------------| ------------------------------ | -------- |
+| `--ac_username`	          |			     | `AC_USERNAME`            		| yes      |
+| `--ac_password`       	   |		    | `AC_PASSWORD`         		 	| yes      |
+| `--ac_admin_password`        	   |			| `AC_ADMIN_PASSWORD`            | no      |
+| `--ac_endpoint`                  |`dc1`	| `AC_ENDPOINT`               	| yes      |
+| `--ac_template`         	|`ubuntu1604_x64_1_0`	   | `AC_TEMPLATE`         		 	| yes      |
+| `--ac_size`    		|`Large`   		   | `AC_SIZE`       				| yes      |
 
 Valid values for `--ac_size` are `Small`, `Medium`, `Large`, `Extra Large`.
 
