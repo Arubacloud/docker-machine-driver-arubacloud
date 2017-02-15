@@ -168,6 +168,17 @@ Dashboard url is different depending on the selected endpoint:
 |[DC5](https://admin.dc5.computing.cloud.it/Login.aspx)		|
 |[DC6](https://admin.dc6.computing.cloud.it/Login.aspx)		|
 
+####View instance list
+
+```
+docker-machine ls
+NAME    			ACTIVE   	DRIVER       STATE   	URL   				SWARM   	DOCKER    ERRORS
+MyDockerHostName   	*        	arubacloud   Running    tcp://10.254.4.232             	v1.10.0   
+default   			-       	arubacloud   Running    tcp://10.254.4.232             	v1.10.0   
+
+```
+
+
 
 ## License
 
