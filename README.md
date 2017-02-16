@@ -168,6 +168,8 @@ Dashboard url is different depending on the selected endpoint:
 |[DC5](https://admin.dc5.computing.cloud.it/Login.aspx)		|
 |[DC6](https://admin.dc6.computing.cloud.it/Login.aspx)		|
 
+![alt tag](img/cloudpanel.PNG)
+
 ####View instance list
 
 ```
@@ -209,7 +211,7 @@ $ docker run -d -p 8000:80 --name webserver kitematic/hello-world-nginx
 
 In a web browser, go to http://<host_ip>:8000 to bring up the webserver home page. You got the <host_ip> from the output of the docker-machine ip <machine> command you ran in a previous step. Use the port you exposed in the docker run command.
 
-
+![alt tag](img/nginx-webserver.png)
 
 
 #### Stop and remove an instance
