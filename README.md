@@ -8,7 +8,7 @@
   * [From Source](#from-source)
 * [Usage](#usage)
   * [Available Options](#available-options)
-  * [Example](#example)
+  * [Examples](#examples)
 * [License](#license)
 
 ## Overview
@@ -177,8 +177,24 @@ MyDockerHostName   	*        	arubacloud   Running    tcp://10.254.4.232        
 default   			-       	arubacloud   Running    tcp://10.254.4.231             	v1.10.0   
 
 ```
+#### Get the IP address
 
+```
+docker-machine ip MyDockerHostName
+10.254.4.232  
 
+```
+#### Stop and remove an instance
+
+```
+docker-machine stop MyDockerHostName
+docker-machine rm MyDockerHostName  
+About to remove MyDockerHostName
+WARNING: This action will delete both local reference and remote instance.
+Are you sure? (y/n): y
+Successfully removed MyDockerHostName
+
+```
 
 ## License
 
