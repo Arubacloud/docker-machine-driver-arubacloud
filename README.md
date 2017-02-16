@@ -159,8 +159,9 @@ MyDockerHostName
 Go to Aruba Cloud dashboard to view new instance.
 Dashboard url is different depending on the selected endpoint:
 
-|[DC1](https://admin.dc1.computing.cloud.it/Login.aspx)	    |[DC2](https://admin.dc2.computing.cloud.it/Login.aspx)	    |
-|-----------------------------------------------------------|-----------------------------------------------------------|
+|[DC1](https://admin.dc1.computing.cloud.it/Login.aspx)	    |[DC2](https://admin.dc2.computing.cloud.it/Login.aspx)	    |[DC3](https://admin.dc3.computing.cloud.it/Login.aspx)	    |[DC4](https://admin.dc4.computing.cloud.it/Login.aspx)	    |[DC5](https://admin.dc5.computing.cloud.it/Login.aspx)	    |[DC6](https://admin.dc6.computing.cloud.it/Login.aspx)	    |
+|-----------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|
+
 
 
 ![alt tag](img/cloudpanel.PNG)
