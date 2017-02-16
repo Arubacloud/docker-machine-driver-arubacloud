@@ -177,6 +177,7 @@ MyDockerHostName   	*        	arubacloud   Running    tcp://10.254.4.232        
 default   			-       	arubacloud   Running    tcp://10.254.4.231             	v1.10.0   
 
 ```
+
 #### Get the IP address
 
 ```
@@ -184,6 +185,33 @@ docker-machine ip MyDockerHostName
 10.254.4.232  
 
 ```
+
+#### Verify Docker Engine
+
+Verify Docker Engine is installed correctly by running docker commands.
+
+Start with something basic like docker run hello-world, or for a more interesting test, run a Dockerized webserver on your new remote machine.
+
+In this example, the -p option is used to expose port 80 from the nginx container and make it accessible on port 8000 of the aws-sandbox host.
+
+```
+$ docker run -d -p 8000:80 --name webserver kitematic/hello-world-nginx
+ Unable to find image 'kitematic/hello-world-nginx:latest' locally
+ latest: Pulling from kitematic/hello-world-nginx
+ a285d7f063ea: Pull complete
+ 2d7baf27389b: Pull complete
+ ...
+ Digest: sha256:ec0ca6dcb034916784c988b4f2432716e2e92b995ac606e080c7a54b52b87066
+ Status: Downloaded newer image for kitematic/hello-world-nginx:latest
+ 942dfb4a0eaae75bf26c9785ade4ff47ceb2ec2a152be82b9d7960e8b5777e65
+
+```
+
+In a web browser, go to http://<host_ip>:8000 to bring up the webserver home page. You got the <host_ip> from the output of the docker-machine ip <machine> command you ran in a previous step. Use the port you exposed in the docker run command.
+
+
+
+
 #### Stop and remove an instance
 
 ```
