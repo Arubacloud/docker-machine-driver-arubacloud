@@ -31,7 +31,6 @@ The latest version of the `docker-machine-driver-arubacloud` binary is available
 Download the `tar` archive and extract it into a directory residing in your PATH. Select the binary that corresponds to your OS and according to the file name prefix:
 
 * Linux: docker-machine-driver-arubacloud-linux
-* Mac OS X: docker-machine-driver-arubacloud-darwin
 * Windows: docker-machine-driver-arubacloud-windows
 
 To extract and install the binary, Linux and Mac users can use the Terminal and the following commands:
