@@ -31,7 +31,6 @@ The latest version of the `docker-machine-driver-arubacloud` binary is available
 Download the `tar` archive and extract it into a directory residing in your PATH. Select the binary that corresponds to your OS and according to the file name prefix:
 
 * Linux: docker-machine-driver-arubacloud-linux
-* Mac OS X: docker-machine-driver-arubacloud-darwin
 * Windows: docker-machine-driver-arubacloud-windows
 
 To extract and install the binary, Linux and Mac users can use the Terminal and the following commands:
@@ -47,6 +46,8 @@ sudo chmod +x /usr/local/bin/docker-machine-driver-arubacloud
 ```
 
 Windows users may run the above commands without `sudo` in Docker Quickstart Terminal that is installed with [Docker Toolbox](https://www.docker.com/products/docker-toolbox).
+
+Otherwise Windows users can extract the zip manually and add the plugin folder to the PATH environment variable.
 
 ### From Source
 
@@ -101,7 +102,7 @@ docker-machine create -d arubacloud --help
 | --------------------------------|--------------------| ------------------------------ | -------- |
 | `--ac_username`	          |			     | `AC_USERNAME`            		| yes      |
 | `--ac_password`       	   |		    | `AC_PASSWORD`         		 	| yes      |
-| `--ac_admin_password`        	   |			| `AC_ADMIN_PASSWORD`            | no      |
+| `--ac_admin_password`        	   |			| `AC_ADMIN_PASSWORD`            | yes      |
 | `--ac_endpoint`                  |`dc1`	| `AC_ENDPOINT`               	| yes      |
 | `--ac_template`         	|`ubuntu1604_x64_1_0`	   | `AC_TEMPLATE`         		 	| yes      |
 | `--ac_size`    		|`Large`   		   | `AC_SIZE`       				| yes      |
@@ -139,6 +140,7 @@ Supported values for `--ac_template` are listed below.
 docker-machine --debug create --driver arubacloud \
  --ac_username		              "ARU-XXXX" \
  --ac_password			          "xxxxxxx" \
+ --ac_admin_password		      "yyyyyyyy" \ 
 MyDockerHostName
 ```
 
@@ -159,7 +161,7 @@ MyDockerHostName
 Go to Aruba Cloud dashboard to view new instance.
 Dashboard url is different depending on the selected endpoint:
 
-|[  DC1  ](https://admin.dc1.computing.cloud.it/Login.aspx)	    |[DC2](https://admin.dc2.computing.cloud.it/Login.aspx)	    |[DC3](https://admin.dc3.computing.cloud.it/Login.aspx)	    |[DC4](https://admin.dc4.computing.cloud.it/Login.aspx)	    |[DC5](https://admin.dc5.computing.cloud.it/Login.aspx)	    |[DC6](https://admin.dc6.computing.cloud.it/Login.aspx)	    |
+|[DC1](https://admin.dc1.computing.cloud.it/Login.aspx)	    |[DC2](https://admin.dc2.computing.cloud.it/Login.aspx)	    |[DC3](https://admin.dc3.computing.cloud.it/Login.aspx)	    |[DC4](https://admin.dc4.computing.cloud.it/Login.aspx)	    |[DC5](https://admin.dc5.computing.cloud.it/Login.aspx)	    |[DC6](https://admin.dc6.computing.cloud.it/Login.aspx)	    |
 |-----------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|-----------------------------------------------------------|
 
 
