@@ -192,7 +192,7 @@ Verify Docker Engine is installed correctly by running docker commands.
 
 Start with something basic like docker run hello-world, or for a more interesting test, run a Dockerized webserver on your new remote machine.
 
-In this example, the -p option is used to expose port 80 from the nginx container and make it accessible on port 8000 of the aws-sandbox host.
+In this example, the -p option is used to expose port 80 from the nginx container and make it accessible on port 8000 of the host.
 
 ```
 $ docker run -d -p 8000:80 --name webserver kitematic/hello-world-nginx
