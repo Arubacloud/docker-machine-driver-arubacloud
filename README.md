@@ -96,6 +96,8 @@ docker-machine create -d arubacloud --help
   * `--ac_endpoint`: Aruba Cloud Data Center (dc1,dc2,dc3,etc.).
   * `--ac_template`: Virtual machine template.
   * `--ac_size`: Size of the virtual machine.
+  * `--ac_type`: Type of Aruba Cloud machine (Smart/Pro).
+  * `--ac_ip`: Specify an IP already purchased on Aruba Cloud (Valid only if ac_type="Pro").
 
 
 |          CLI Option             |Default Value 	| Environment Variable           | Required |
@@ -106,8 +108,12 @@ docker-machine create -d arubacloud --help
 | `--ac_endpoint`                  |`dc1`	| `AC_ENDPOINT`               	| yes      |
 | `--ac_template`         	|`ubuntu1604_x64_1_0`	   | `AC_TEMPLATE`         		 	| yes      |
 | `--ac_size`    		|`Large`   		   | `AC_SIZE`       				| yes      |
+| `--ac_type`    		|`Smart`   		   | `AC_TYPE`       				| yes      |
+| `--ac_ip`    		|   		   | `AC_IP`       				| no      |
 
 Valid values for `--ac_size` are `Small`, `Medium`, `Large`, `Extra Large`.
+
+Valid values for `--ac_type` are `Smart`, `Pro`.
 
 Available parameters for `--ac_endpoint` are shown in the next table.
 
@@ -129,7 +135,6 @@ Supported values for `--ac_template` are listed below.
 | `ubuntu1604_x64_1_0`                	| `Ubuntu Server 16.04 LTS 64bit`			|
 | `BSD-001-freebsd_x64_1_0`      		| `FreeBSD 10.x 64bit`						|
 | `LO12-002_OpenSuse_12_x64_1_0`    	| `openSuse 12.1 64bit`						|
-| `WS12-002_W2K12R2_1_0`                | `Windows 2012 R2 64bit`					|
 
  
 ### Examples
@@ -144,7 +149,7 @@ docker-machine --debug create --driver arubacloud \
 MyDockerHostName
 ```
 
-#### Create specifying template, endpoint and size:
+#### Create a Smart specifying template, endpoint and size:
 
 ```
 docker-machine --debug create --driver arubacloud \
@@ -153,9 +158,44 @@ docker-machine --debug create --driver arubacloud \
  --ac_endpoint			          "dc1" \
  --ac_template	                  "ubuntu1404_x64_1_0" \
  --ac_size				          "Large" \
- --ac_admin_password		      "yyyyyyyy" \  
+ --ac_admin_password		      "yyyyyyyy" \ 
+ --ac_type		      			  "Smart" \ 
 MyDockerHostName
 ```
+#### Create a Pro specifying template, endpoint and size:
+
+If you don't specify an IP Address a new one will be automatically purchased.
+
+```
+docker-machine --debug create --driver arubacloud \
+ --ac_username		              "ARU-XXXX" \
+ --ac_password			          "xxxxxxx" \
+ --ac_endpoint			          "dc1" \
+ --ac_template	                  "ubuntu1404_x64_1_0" \
+ --ac_size				          "Large" \
+ --ac_admin_password		      "yyyyyyyy" \ 
+ --ac_type		      			  "Pro" \ 
+MyDockerHostName
+```
+
+#### Create a Pro specifying template, endpoint, size and IPAddress:
+
+If you don't specify an IP Address a new one will be automatically purchased.
+
+```
+docker-machine --debug create --driver arubacloud \
+ --ac_username		              "ARU-XXXX" \
+ --ac_password			          "xxxxxxx" \
+ --ac_endpoint			          "dc1" \
+ --ac_template	                  "ubuntu1404_x64_1_0" \
+ --ac_size				          "Large" \
+ --ac_admin_password		      "yyyyyyyy" \ 
+ --ac_type		      			  "Pro" \ 
+ --ac_ip		      			  "xx.xx.xx.xx" \ 
+MyDockerHostName
+```
+
+
 ####View new instance
 
 Go to Aruba Cloud dashboard to view new instance.
