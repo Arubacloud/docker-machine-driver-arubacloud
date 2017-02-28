@@ -149,7 +149,7 @@ docker-machine --debug create --driver arubacloud \
 MyDockerHostName
 ```
 
-#### Create a Smart specifying template, endpoint and size:
+#### Create a Smart machine specifying template, endpoint and size:
 
 ```
 docker-machine --debug create --driver arubacloud \
@@ -162,7 +162,7 @@ docker-machine --debug create --driver arubacloud \
  --ac_type		      			  "Smart" \ 
 MyDockerHostName
 ```
-#### Create a Pro specifying template, endpoint and size:
+#### Create a Pro machine specifying template, endpoint and size:
 
 If you don't specify an IP Address a new one will be automatically purchased.
 
@@ -178,9 +178,8 @@ docker-machine --debug create --driver arubacloud \
 MyDockerHostName
 ```
 
-#### Create a Pro specifying template, endpoint, size and IPAddress:
+#### Create a Pro machine specifying template, endpoint, size and IPAddress:
 
-If you don't specify an IP Address a new one will be automatically purchased.
 
 ```
 docker-machine --debug create --driver arubacloud \
