@@ -142,7 +142,7 @@ Supported values for `--ac_template` are listed below.
 #### Create using defaults:
 
 ```
-docker-machine --debug create --driver arubacloud \
+docker-machine create --driver arubacloud \
  --ac_username		              "ARU-XXXX" \
  --ac_password			          "xxxxxxx" \
  --ac_admin_password		      "yyyyyyyy" \ 
@@ -152,7 +152,7 @@ MyDockerHostName
 #### Create a Smart machine specifying template, endpoint and size:
 
 ```
-docker-machine --debug create --driver arubacloud \
+docker-machine create --driver arubacloud \
  --ac_username		              "ARU-XXXX" \
  --ac_password			          "xxxxxxx" \
  --ac_endpoint			          "dc1" \
@@ -167,7 +167,7 @@ MyDockerHostName
 If you don't specify an IP Address a new one will be automatically purchased.
 
 ```
-docker-machine --debug create --driver arubacloud \
+docker-machine create --driver arubacloud \
  --ac_username		              "ARU-XXXX" \
  --ac_password			          "xxxxxxx" \
  --ac_endpoint			          "dc1" \
@@ -182,7 +182,7 @@ MyDockerHostName
 
 
 ```
-docker-machine --debug create --driver arubacloud \
+docker-machine create --driver arubacloud \
  --ac_username		              "ARU-XXXX" \
  --ac_password			          "xxxxxxx" \
  --ac_endpoint			          "dc1" \
@@ -202,15 +202,14 @@ Note:
 
 
 ```
-docker-machine --debug create --driver arubacloud \
+docker-machine create --driver arubacloud \
  --ac_username		              "ARU-XXXX" \
  --ac_password			          "xxxxxxx" \
  --ac_endpoint			          "dc1" \
- --ac_size				          "Large" \
  --ac_admin_password		      "yyyyyyyy" \ 
  --ac_action		      		  "Attach" \ 
  --ac_ip		      			  "xx.xx.xx.xx" \ 
- --ac_ssh_key="private_public_key_folder" \
+ --ac_ssh_key 					  "private_key_path" \
 MyDockerExistingHostName
 ```
 

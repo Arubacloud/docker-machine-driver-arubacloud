@@ -59,7 +59,7 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 		mcnflag.StringFlag{
 			EnvVar: "AC_USERNAME",
 			Name: "ac_username",
-			Usage: "ArubaCloud Userame",
+			Usage: "ArubaCloud Username",
 			Value: "",
 		},
 		mcnflag.StringFlag{
@@ -107,7 +107,7 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 		mcnflag.StringFlag{
 			EnvVar: "AC_SSH_KEY",
 			Name: "ac_ssh_key",
-			Usage: "Absolute path of the ssh key",
+			Usage: "Absolute path of the ssh private key",
 			Value: "",
 		},
 		
