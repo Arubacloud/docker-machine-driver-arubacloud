@@ -36,9 +36,9 @@ type Driver struct {
 	// internal ids
 	ServerId      int
 	ServerName    string
-	KeyPairName   string
+	SSHKey   string
 	
-	Type   string
+	Action   string
 	IpAddress   string
 
 	// internal
@@ -49,7 +49,7 @@ const(
 	defaultTemplate = "ubuntu1604_x64_1_0"
 	defaultEndpoint = "dc1"
 	defaultSize = "Large"
-	machineType = "Smart"
+	machineType = "NewSmart"
 )
 
 // GetCreateFlags registers the "machine create" flags recognized by this driver, including
@@ -93,9 +93,9 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Value: defaultSize,
 		},
 		mcnflag.StringFlag{
-			EnvVar: "AC_TYPE",
-			Name: "ac_type",
-			Usage: "Machine Type",
+			EnvVar: "AC_ACTION",
+			Name: "ac_action",
+			Usage: "Action type",
 			Value: machineType,
 		},
 		mcnflag.StringFlag{
@@ -104,6 +104,13 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Usage: "Set this to use an already purchased Ip Address",
 			Value: "",
 		},
+		mcnflag.StringFlag{
+			EnvVar: "AC_SSH_KEY",
+			Name: "ac_ssh_key",
+			Usage: "Absolute path of the ssh key",
+			Value: "",
+		},
+		
 	}
 }
 
@@ -114,25 +121,22 @@ func (d *Driver) DriverName() string {
 
 func (d *Driver) PreCreateCheck() error {
 	client := d.getClient()
-	
-	hyperV := 4
-	if (d.Type == "Pro") {
-		hyperV = 2
-	}
-	
-	log.Debug("Validating Template ", d.TemplateName)
-	_, err := client.GetTemplate(d.TemplateName, hyperV)
-	if err != nil {
-		fmt.Println("GetTemplate: ", err)
-		return err
-	}
 
-
-	// Use a common key or create a machine specific one
-	if len(d.KeyPairName) != 0 {
-		d.SSHKeyPath = filepath.Join(d.StorePath, "sshkeys", d.KeyPairName)
-	} else {
-		d.KeyPairName = fmt.Sprintf("%s-%s", d.MachineName, mcnutils.GenerateRandomID())
+	switch d.Action{
+		case "NewSmart":
+			log.Debug("Validating Template ", d.TemplateName)
+			_, err := client.GetTemplate(d.TemplateName, 4)
+			if err != nil {
+				fmt.Println("GetTemplate: ", err)
+				return err
+			}
+		case "NewPro":
+			log.Debug("Validating Template ", d.TemplateName)
+			_, err := client.GetTemplate(d.TemplateName, 2)
+			if err != nil {
+				fmt.Println("GetTemplate: ", err)
+				return err
+			}
 	}
 
 	return nil
@@ -159,8 +163,8 @@ func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
 	d.TemplateName = flags.String("ac_template")
 	d.Size = flags.String("ac_size")
 	d.Endpoint = flags.String("ac_endpoint")
-	d.KeyPairName = flags.String("ac_ssh_key")
-	d.Type = flags.String("ac_type")
+	d.SSHKey = flags.String("ac_ssh_key")
+	d.Action = flags.String("ac_action")
 	d.IPAddress = flags.String("ac_ip")
 	
 	d.SSHUser = "root"
@@ -431,16 +435,72 @@ func (d *Driver) CreatePro() error {
 	return nil
 }
 
+func (d *Driver) Attach() error {
+	
+	log.Debug("Attaching machine %s at %s", d.MachineName, d.IPAddress)
+	client := d.getClient()
+
+	_, err := d.createKeyPair()
+	if err != nil {
+		return err
+	}
+
+	log.Debug("Waiting for the server to be ready...")
+	servers, err := client.GetServers()
+	if err != nil {
+		return err
+	}
+
+	// Retrieving ServerID from server list
+	for _, server := range servers {
+		log.Debugf("Iterating server name: %s", server.Name)
+		if server.Name == d.MachineName {
+			d.ServerId = server.ServerId
+			log.Debugf("Setting Driver ServerId to: %d", d.ServerId)
+		}
+	}
+
+	if d.ServerId == 0 {
+		return fmt.Errorf("No Server found with Name: %s", d.MachineName)
+	}
+
+	// Retrieve ServerDetails for the given ServerID
+	_, err = client.GetServer(d.ServerId)
+	if err != nil {
+		return err
+	}
+
+	// Wait until instance is ACTIVE
+	log.Debugf("Waiting for ArubaCloud Server...", map[string]interface{}{"MachineID": d.ServerId})
+	_, err = d.waitForServerStatus(3)
+	if err != nil {
+		return err
+	}
+
+
+	log.Debugf("IP address found", map[string]interface{}{
+		"MachineID": d.ServerId,
+		"IP":        d.IPAddress,
+	})
+	
+	return nil
+}
+
 // Create a new docker machine instance on ArubaCloud Cloud
 func (d *Driver) Create() error {
-	switch d.Type{
-		case "Smart":
+	switch d.Action{
+		case "NewSmart":
 		err := d.CreateSmart()
 		if err != nil {
 			return err
 		}
-		case "Pro":
+		case "NewPro":
 		err := d.CreatePro()
+		if err != nil {
+			return err
+		}
+		case "Attach":
+		err := d.Attach()
 		if err != nil {
 			return err
 		}
@@ -456,18 +516,56 @@ func (d *Driver) publicSSHKeyPath() string {
 	return d.GetSSHKeyPath() + ".pub"
 }
 
-func (d *Driver) createKeyPair() (string, error) {
-	log.Debug("Creating Key Pair...", map[string]interface{}{"Name": d.KeyPairName})
-	keyfile := d.GetSSHKeyPath()
-	keypath := filepath.Dir(keyfile)
-	err := os.MkdirAll(keypath, 0700)
-	if err != nil {
-		return "", err
+func copySSHKey(src, dst string) error {
+	if err := mcnutils.CopyFile(src, dst); err != nil {
+		return fmt.Errorf("unable to copy ssh key: %s", err)
 	}
 
-	err = ssh.GenerateSSHKey(d.GetSSHKeyPath())
-	if err != nil {
-		return "", err
+	if err := os.Chmod(dst, 0600); err != nil {
+		return fmt.Errorf("unable to set permissions on the ssh key: %s", err)
+	}
+
+	return nil
+}
+
+func (d *Driver) createKeyPair() (string, error) {
+	if len(d.SSHKey) > 0 {
+		log.Debug("Importing Key Pair...", map[string]interface{}{"Path": d.SSHKey})
+		keyfile := d.GetSSHKeyPath()
+		log.Debug("keyfile: ", keyfile)
+		keypath := filepath.Dir(keyfile)
+		log.Debug("keypath: ", keypath)
+		
+		err := os.MkdirAll(keypath, 0700)
+		if err != nil {
+			return "", err
+		}
+		
+		
+		if err := copySSHKey(d.SSHKey, d.SSHKeyPath); err != nil {
+			return "",err
+		}
+		if err := copySSHKey(d.SSHKey+".pub", d.SSHKeyPath+".pub"); err != nil {
+			log.Infof("Couldn't copy SSH public key : %s", err)
+			return "",err
+		}
+			
+	} else {
+		log.Debug("Creating Key Pair...")
+		keyfile := d.GetSSHKeyPath()
+		log.Debug("keyfile: ", keyfile)
+		keypath := filepath.Dir(keyfile)
+		log.Debug("keypath: ", keypath)
+		err := os.MkdirAll(keypath, 0700)
+		if err != nil {
+			return "", err
+		}
+		
+		err = ssh.GenerateSSHKey(d.GetSSHKeyPath())
+		if err != nil {
+			return "", err
+		}
+
 	}
 	
 	publicKey, err := ioutil.ReadFile(d.publicSSHKeyPath())
@@ -610,7 +708,7 @@ func (d *Driver) Kill() (err error) {
 
 	// Poweroff VM in case it's running
 	if s == state.Running {
-		client.StopServer(d.ServerId)
+		client.KillServer(d.ServerId)
 		_, err := d.waitForServerStatus(3)
 		if err != nil { return err }
 	}

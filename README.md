@@ -96,8 +96,8 @@ docker-machine create -d arubacloud --help
   * `--ac_endpoint`: Aruba Cloud Data Center (dc1,dc2,dc3,etc.).
   * `--ac_template`: Virtual machine template.
   * `--ac_size`: Size of the virtual machine.
-  * `--ac_type`: Type of Aruba Cloud machine (Smart/Pro).
-  * `--ac_ip`: Specify an IP already purchased on Aruba Cloud (Valid only if ac_type="Pro").
+  * `--ac_action`: Type of action.
+  * `--ac_ip`: Specify an IP already purchased on Aruba Cloud (Valid only if ac_action="NewPro").
 
 
 |          CLI Option             |Default Value 	| Environment Variable           | Required |
@@ -108,12 +108,12 @@ docker-machine create -d arubacloud --help
 | `--ac_endpoint`                  |`dc1`	| `AC_ENDPOINT`               	| yes      |
 | `--ac_template`         	|`ubuntu1604_x64_1_0`	   | `AC_TEMPLATE`         		 	| yes      |
 | `--ac_size`    		|`Large`   		   | `AC_SIZE`       				| yes      |
-| `--ac_type`    		|`Smart`   		   | `AC_TYPE`       				| yes      |
+| `--ac_action`    		|`NewSmart`   		   | `AC_ACTION`       				| yes      |
 | `--ac_ip`    		|   		   | `AC_IP`       				| no      |
 
 Valid values for `--ac_size` are `Small`, `Medium`, `Large`, `Extra Large`.
 
-Valid values for `--ac_type` are `Smart`, `Pro`.
+Valid values for `--ac_action` are `NewSmart`, `NewPro`, `Attach`.
 
 Available parameters for `--ac_endpoint` are shown in the next table.
 
@@ -159,7 +159,7 @@ docker-machine --debug create --driver arubacloud \
  --ac_template	                  "ubuntu1404_x64_1_0" \
  --ac_size				          "Large" \
  --ac_admin_password		      "yyyyyyyy" \ 
- --ac_type		      			  "Smart" \ 
+ --ac_action		      		  "NewSmart" \ 
 MyDockerHostName
 ```
 #### Create a Pro machine specifying template, endpoint and size:
@@ -174,7 +174,7 @@ docker-machine --debug create --driver arubacloud \
  --ac_template	                  "ubuntu1404_x64_1_0" \
  --ac_size				          "Large" \
  --ac_admin_password		      "yyyyyyyy" \ 
- --ac_type		      			  "Pro" \ 
+ --ac_action		      		  "NewPro" \ 
 MyDockerHostName
 ```
 
@@ -189,15 +189,35 @@ docker-machine --debug create --driver arubacloud \
  --ac_template	                  "ubuntu1404_x64_1_0" \
  --ac_size				          "Large" \
  --ac_admin_password		      "yyyyyyyy" \ 
- --ac_type		      			  "Pro" \ 
+ --ac_action		      		  "NewPro" \ 
  --ac_ip		      			  "xx.xx.xx.xx" \ 
 MyDockerHostName
 ```
+#### Attach to an existing machine:
+
+Note: 
+- In order to attach to an existing machine, this machine must have been created with an SSH key. 
+- You must put private and public key in the same folder on the machine where docker-machine commands will be launched, and pass this folder as an argument (Eg. --ac_ssh_key="private_public_key_folder").
+- The name of the machine must be the same that is visible on [Aruba Cloud Dashboard](#view-instances)
 
 
-####View new instance
+```
+docker-machine --debug create --driver arubacloud \
+ --ac_username		              "ARU-XXXX" \
+ --ac_password			          "xxxxxxx" \
+ --ac_endpoint			          "dc1" \
+ --ac_size				          "Large" \
+ --ac_admin_password		      "yyyyyyyy" \ 
+ --ac_action		      		  "Attach" \ 
+ --ac_ip		      			  "xx.xx.xx.xx" \ 
+ --ac_ssh_key="private_public_key_folder" \
+MyDockerExistingHostName
+```
 
-Go to Aruba Cloud dashboard to view new instance.
+
+####View instances
+
+Go to Aruba Cloud dashboard to view machine instances.
 Dashboard url is different depending on the selected endpoint:
 
 |[DC1](https://admin.dc1.computing.cloud.it/Login.aspx)	    |[DC2](https://admin.dc2.computing.cloud.it/Login.aspx)	    |[DC3](https://admin.dc3.computing.cloud.it/Login.aspx)	    |[DC4](https://admin.dc4.computing.cloud.it/Login.aspx)	    |[DC5](https://admin.dc5.computing.cloud.it/Login.aspx)	    |[DC6](https://admin.dc6.computing.cloud.it/Login.aspx)	    |
