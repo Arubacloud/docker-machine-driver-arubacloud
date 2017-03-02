@@ -197,7 +197,7 @@ MyDockerHostName
 
 Note: 
 - In order to attach to an existing machine, this machine must have been created with an SSH key. 
-- You must put private and public key in the same folder on the machine where docker-machine commands will be launched, and pass this folder as an argument (Eg. --ac_ssh_key="private_public_key_folder").
+- You must put private and public key in the same folder on the machine where docker-machine commands will be launched, and pass this folder as an argument (Eg. --ac_ssh_key="private_key_path").
 - The name of the machine must be the same that is visible on [Aruba Cloud Dashboard](#view-instances)
 
 
