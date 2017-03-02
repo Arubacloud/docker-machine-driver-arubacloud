@@ -71,31 +71,31 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 		mcnflag.StringFlag{
 			EnvVar: "AC_ADMIN_PASSWORD",
 			Name: "ac_admin_password",
-			Usage: "Machine root password",
+			Usage: "ArubaCloud Machine root password",
 			Value: "",
 		},
 		mcnflag.StringFlag{
 			EnvVar: "AC_ENDPOINT",
 			Name: "ac_endpoint",
-			Usage: "Endpoint name (dc1,dc2,dc3 etc.)",
+			Usage: "ArubaCloud Endpoint name (dc1,dc2,dc3 etc.)",
 			Value: defaultEndpoint,
 		},
 		mcnflag.StringFlag{
 			EnvVar: "AC_TEMPLATE",
 			Name: "ac_template",
-			Usage: "VM Template",
+			Usage: "ArubaCloud VM Template",
 			Value: defaultTemplate,
 		},
 		mcnflag.StringFlag{
 			EnvVar: "AC_SIZE",
 			Name: "ac_size",
-			Usage: "Machine Size",
+			Usage: "ArubaCloud Machine Size",
 			Value: defaultSize,
 		},
 		mcnflag.StringFlag{
 			EnvVar: "AC_ACTION",
 			Name: "ac_action",
-			Usage: "Action type",
+			Usage: "ArubaCloud Action type",
 			Value: machineType,
 		},
 		mcnflag.StringFlag{
