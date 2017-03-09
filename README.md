@@ -133,8 +133,7 @@ Supported values for `--ac_template` are listed below.
 | `centos7_x64_1_0`                     | `CentOS 7.x 64bit`						|
 | `debian8_x64_1_0`                     | `Debian 8 64bit`							|
 | `ubuntu1604_x64_1_0`                	| `Ubuntu Server 16.04 LTS 64bit`			|
-| `BSD-001-freebsd_x64_1_0`      		| `FreeBSD 10.x 64bit`						|
-| `LO12-002_OpenSuse_12_x64_1_0`    	| `openSuse 12.1 64bit`						|
+
 
  
 ### Examples
@@ -206,7 +205,6 @@ docker-machine create --driver arubacloud \
  --ac_username		              "ARU-XXXX" \
  --ac_password			          "xxxxxxx" \
  --ac_endpoint			          "dc1" \
- --ac_admin_password		      "yyyyyyyy" \ 
  --ac_action		      		  "Attach" \ 
  --ac_ip		      			  "xx.xx.xx.xx" \ 
  --ac_ssh_key 					  "private_key_path" \

@@ -39,7 +39,6 @@ type Driver struct {
 	SSHKey   string
 	
 	Action   string
-	IpAddress   string
 
 	// internal
 	client        *goarubacloud.API
@@ -120,24 +119,6 @@ func (d *Driver) DriverName() string {
 }
 
 func (d *Driver) PreCreateCheck() error {
-	client := d.getClient()
-
-	switch d.Action{
-		case "NewSmart":
-			log.Debug("Validating Template ", d.TemplateName)
-			_, err := client.GetTemplate(d.TemplateName, 4)
-			if err != nil {
-				fmt.Println("GetTemplate: ", err)
-				return err
-			}
-		case "NewPro":
-			log.Debug("Validating Template ", d.TemplateName)
-			_, err := client.GetTemplate(d.TemplateName, 2)
-			if err != nil {
-				fmt.Println("GetTemplate: ", err)
-				return err
-			}
-	}
 
 	return nil
 }
@@ -208,7 +189,7 @@ func (d *Driver) CreateSmart() error {
 	
 
 	log.Debug("Get Template ", d.TemplateName)
-	template, err := client.GetTemplate(d.TemplateName, 2)
+	template, err := client.GetTemplate(d.TemplateName, 4)
 	if err != nil {
 		return err
 	} else {
