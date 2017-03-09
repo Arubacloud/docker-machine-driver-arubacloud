@@ -32,6 +32,7 @@ type Driver struct {
 	Username      string
 	Password      string
 	Endpoint      string
+	ConfigureIPv6 bool
 
 	// internal ids
 	ServerId      int
@@ -109,7 +110,11 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Usage: "Absolute path of the ssh private key",
 			Value: "",
 		},
-		
+		mcnflag.BoolFlag{
+			EnvVar: "AC_IPV6",
+			Name: "ac_ipv6",
+			Usage: "Configure an IPv6 address for the ArubaCloud VM",
+		},
 	}
 }
 
@@ -147,8 +152,8 @@ func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
 	d.SSHKey = flags.String("ac_ssh_key")
 	d.Action = flags.String("ac_action")
 	d.IPAddress = flags.String("ac_ip")
-	
 	d.SSHUser = "root"
+	d.ConfigureIPv6 = flags.Bool("ac_ipv6")
 
 	return nil
 }
@@ -213,6 +218,7 @@ func (d *Driver) CreateSmart() error {
 		cloudpackage.PackageID,
 		template.Id,
 		key,
+		d.ConfigureIPv6,
 	)
 
 	if err != nil {
@@ -356,6 +362,7 @@ func (d *Driver) CreatePro() error {
 		diskSize,
 		cpuQuantity,
 		ramQuantity,
+		d.ConfigureIPv6,
 	)
 
 	if err != nil {

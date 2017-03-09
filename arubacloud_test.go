@@ -16,6 +16,7 @@ func TestConfigFlags(t *testing.T) {
 			"ac_endpoint": "dc1",
 			"ac_template": "ubuntu_xx_x",
 			"ac_size": "Large",
+			"ac_ipv6": "true",
 		},
 		CreateFlags: driver.GetCreateFlags(),
 	}	
@@ -35,6 +36,7 @@ func TestDefaultConfigFlags(t *testing.T) {
 			"ac_username": "ARU-xxxx",
 			"ac_password": "xxxx",
 			"ac_admin_password": "xxxx",
+			"ac_ipv6": "true",
 		},
 		CreateFlags: driver.GetCreateFlags(),
 	}	
