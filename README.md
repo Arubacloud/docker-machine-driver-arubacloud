@@ -98,6 +98,7 @@ docker-machine create -d arubacloud --help
   * `--ac_size`: Size of the virtual machine.
   * `--ac_action`: Type of action.
   * `--ac_ip`: Specify an IP already purchased on Aruba Cloud (Valid only if ac_action="NewPro").
+  * `--ac_ssh_key`: Path of private key file. (Both private and public key must be in the same folder).
 
 
 |          CLI Option             |Default Value 	| Environment Variable           | Required |
@@ -112,6 +113,16 @@ docker-machine create -d arubacloud --help
 | `--ac_ip`    		|   		   | `AC_IP`       				| no      |
 
 Valid values for `--ac_size` are `Small`, `Medium`, `Large`, `Extra Large`.
+
+####Size mapping for Pro machines
+
+|          Size             |CPU 	| Ram(GB)          | Disk Size(GB) |
+| --------------------------------|--------------------| ------------------------------ | -------- |
+| `Small`	          |1			     | 1           		| 20      |
+| `Medium`       	   |1		    | 2         		 	| 40      |
+| `Large`        	   |2			| 4            | 80      |
+| `Extra Large`                  |4	| 8              	| 160      |
+
 
 Valid values for `--ac_action` are `NewSmart`, `NewPro`, `Attach`.
 
