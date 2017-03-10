@@ -141,9 +141,9 @@ Supported values for `--ac_template` are listed below.
 
 |              Parameter                |					OS						|
 |---------------------------------------|-------------------------------------------|
-| `centos7_x64_1_0`                     | `CentOS 7.x 64bit`						|
 | `debian8_x64_1_0`                     | `Debian 8 64bit`							|
 | `ubuntu1604_x64_1_0`                	| `Ubuntu Server 16.04 LTS 64bit`			|
+| `centos7_x64_1_0`                     | `CentOS 7.x 64bit`						|
 
 
  
