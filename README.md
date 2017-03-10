@@ -116,7 +116,7 @@ Valid values for `--ac_size` are `Small`, `Medium`, `Large`, `Extra Large`.
 
 ####Size mapping for Pro machines
 
-|          Size             |CPU 	| Ram(GB)          | Disk Size(GB) |
+|          Size             |CPU 	| Ram (GB)          | Disk Size (GB) |
 | --------------------------------|--------------------| ------------------------------ | -------- |
 | `Small`	          |1			     | 1           		| 20      |
 | `Medium`       	   |1		    | 2         		 	| 40      |
