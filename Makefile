@@ -17,37 +17,37 @@ DOCKER_CONTAINER_NAME := $(DOCKER_IMAGE_NAME)-build-container
 default: build
 
 clean:
-        rm -rf dist
+	rm -rf dist
 
 ifeq ($(USE_CONTAINER), true)
 build test release:
-        docker build -t $(DOCKER_IMAGE_NAME) .
+	docker build -t $(DOCKER_IMAGE_NAME) .
 
-        docker run \
-                --rm \
-                --name $(DOCKER_CONTAINER_NAME) \
-                -v $(shell pwd):/go/src/$(PROJECT) \
-                -w /go/src/$(PROJECT) \
-                -e TARGET_OS \
-                -e TARGET_ARCH \
-                -e GITHUB_TOKEN \
-                $(DOCKER_IMAGE_NAME) \
-                make $@
+	docker run \
+		--rm \
+		--name $(DOCKER_CONTAINER_NAME) \
+		-v $(shell pwd):/go/src/$(PROJECT) \
+		-w /go/src/$(PROJECT) \
+		-e TARGET_OS \
+		-e TARGET_ARCH \
+		-e GITHUB_TOKEN \
+		$(DOCKER_IMAGE_NAME) \
+		make $@
 else
 build:
-        GO15VENDOREXPERIMENT=1 glide up
-        GO15VENDOREXPERIMENT=1 GOGC=off gox -os "$(TARGET_OS)" -arch "$(TARGET_ARCH)" \
-        -output "dist/$(EXECUTABLE_NAME)_{{.OS}}_{{.Arch}}" ./bin
+	GO15VENDOREXPERIMENT=1 glide up
+	GO15VENDOREXPERIMENT=1 GOGC=off gox -os "$(TARGET_OS)" -arch "$(TARGET_ARCH)" \
+	-output "dist/$(EXECUTABLE_NAME)_{{.OS}}_{{.Arch}}" ./bin
 
 test:
-        exit 0
+	exit 0
 
 release: clean build
-        git tag | grep -q -w $(VERSION) || git tag $(VERSION)
+	git tag | grep -q -w $(VERSION) || git tag $(VERSION)
 
-        ghr --repository $(CURRENT_DIR) \
-                --username $(GITHUB_USER) \
-                --prerelease \
-                --replace \
-                $(VERSION) dist/
+	ghr --repository $(CURRENT_DIR) \
+		--username $(GITHUB_USER) \
+		--prerelease \
+		--replace \
+		$(VERSION) dist/
 endif
