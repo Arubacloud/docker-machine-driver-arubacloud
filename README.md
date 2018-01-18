@@ -136,6 +136,7 @@ Available parameters for `--ac_endpoint` are shown in the next table.
 | `dc4`     | France                                               |
 | `dc5`     | Deutschland                             			   |
 | `dc6`     | United Kingdom                            		|
+| `dc8`     | Poland                           		|
 
 Supported values for `--ac_template` are listed below.
 
